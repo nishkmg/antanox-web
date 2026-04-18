@@ -2,16 +2,23 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
 import { useCapacity } from "@/hooks/useCapacity";
 import { getCapacityBadgeText, getCapacityBadgeColor } from "@/lib/capacity";
 import styles from "./Hero.module.css";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export default function Hero() {
   const { status } = useCapacity();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | null>(null);
+  const headlineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -20,16 +27,17 @@ export default function Hero() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const context = ctx;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const isMobile = window.matchMedia("(hover: none)").matches;
+
+    if (isMobile || prefersReducedMotion) return;
+
     let width = window.innerWidth;
     let height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
-
-    const isMobile = window.matchMedia("(hover: none)").matches;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (isMobile || prefersReducedMotion) return;
 
     const nodeCount = width < 768 ? 80 : 200;
     const nodes: { x: number; y: number; vx: number; vy: number }[] = [];
@@ -54,9 +62,9 @@ export default function Hero() {
     document.addEventListener("mousemove", handleMouseMove);
 
     function draw() {
-      context.clearRect(0, 0, width, height);
+      ctx!.clearRect(0, 0, width, height);
 
-      context.fillStyle = "#0047FF";
+      ctx!.fillStyle = "#0047FF";
       for (const node of nodes) {
         const dx = mouseX - node.x;
         const dy = mouseY - node.y;
@@ -76,13 +84,13 @@ export default function Hero() {
         if (node.x < 0 || node.x > width) node.vx *= -1;
         if (node.y < 0 || node.y > height) node.vy *= -1;
 
-        context.beginPath();
-        context.arc(node.x, node.y, 2, 0, Math.PI * 2);
-        context.fill();
+        ctx!.beginPath();
+        ctx!.arc(node.x, node.y, 2, 0, Math.PI * 2);
+        ctx!.fill();
       }
 
-      context.strokeStyle = "rgba(255, 255, 255, 0.04)";
-      context.lineWidth = 0.5;
+      ctx!.strokeStyle = "rgba(255, 255, 255, 0.04)";
+      ctx!.lineWidth = 0.5;
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
@@ -90,10 +98,10 @@ export default function Hero() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < 100) {
-            context.beginPath();
-            context.moveTo(nodes[i].x, nodes[i].y);
-            context.lineTo(nodes[j].x, nodes[j].y);
-            context.stroke();
+            ctx!.beginPath();
+            ctx!.moveTo(nodes[i].x, nodes[i].y);
+            ctx!.lineTo(nodes[j].x, nodes[j].y);
+            ctx!.stroke();
           }
         }
       }
@@ -121,6 +129,58 @@ export default function Hero() {
     };
   }, []);
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) return;
+
+    const headline = headlineRef.current;
+    if (!headline) return;
+
+    const lines = headline.querySelectorAll(".line");
+    const divider = headline.querySelector(`.${styles.divider}`);
+    const subtext = headline.querySelector(`.${styles.subtext}`);
+    const ctas = headline.querySelector(`.${styles.ctas}`);
+
+    const tl = gsap.timeline({ delay: 0.1 });
+
+    tl.fromTo(
+      lines,
+      { clipPath: "inset(100% 0 0 0)", opacity: 0 },
+      {
+        clipPath: "inset(0% 0 0 0)",
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "expo.out",
+      }
+    )
+      .fromTo(
+        divider,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.6, ease: "expo.out" },
+        "-=0.3"
+      )
+      .fromTo(
+        subtext,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" },
+        "-=0.3"
+      )
+      .fromTo(
+        ctas,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" },
+        "-=0.3"
+      );
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
   const badgeText = status
     ? getCapacityBadgeText(status)
     : "● ACCEPTING LIMITED ENGAGEMENTS — Q3 2026";
@@ -139,12 +199,12 @@ export default function Hero() {
         </Badge>
       </div>
 
-      <div className={styles.content}>
+      <div className={styles.content} ref={headlineRef}>
         <h1 className={styles.headline}>
-          <span className={styles.line}>Proprietary</span>
-          <span className={styles.line}>Infrastructure.</span>
-          <span className={styles.line}>Engineered for</span>
-          <span className={styles.line}>Consequence.</span>
+          <span className={`line ${styles.line}`}>Proprietary</span>
+          <span className={`line ${styles.line}`}>Infrastructure.</span>
+          <span className={`line ${styles.line}`}>Engineered for</span>
+          <span className={`line ${styles.line}`}>Consequence.</span>
         </h1>
 
         <div className={styles.divider} />

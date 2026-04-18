@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { waitlistSchema } from "@/lib/validations";
 import { sendWaitlistConfirmation } from "@/lib/email";
+import { addToNotionWaitlist } from "@/lib/notion";
 
 function generateReferenceId(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
@@ -38,9 +39,26 @@ export async function POST(request: NextRequest) {
       engagementType: data.engagementType,
     });
 
-    const emailResult = await sendWaitlistConfirmation(data, referenceId);
+    const [emailResult, notionResult] = await Promise.all([
+      sendWaitlistConfirmation(data, referenceId),
+      addToNotionWaitlist(
+        {
+          fullName: data.fullName,
+          organization: data.organization,
+          email: data.email,
+          engagementType: data.engagementType,
+          context: data.context,
+        },
+        referenceId
+      ),
+    ]);
+
     if (!emailResult.success) {
       console.warn("Failed to send waitlist confirmation email:", emailResult.error);
+    }
+
+    if (!notionResult.success) {
+      console.warn("Failed to add waitlist to Notion:", notionResult.error);
     }
 
     return NextResponse.json({

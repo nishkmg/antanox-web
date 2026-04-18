@@ -1,4 +1,13 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./ProtocolSteps.module.css";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const steps = [
   {
@@ -25,8 +34,51 @@ const steps = [
 ];
 
 export default function ProtocolSteps() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) return;
+
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const header = section.querySelector(`.${styles.header}`);
+    const stepElements = section.querySelectorAll(`.${styles.step}`);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 75%",
+        once: true,
+      },
+    });
+
+    if (header) {
+      tl.fromTo(
+        header.children,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "expo.out" }
+      );
+    }
+
+    tl.fromTo(
+      stepElements,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "expo.out" },
+      "-=0.3"
+    );
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+
   return (
-    <section className={styles.section}>
+    <section className={styles.section} ref={sectionRef}>
       <div className={styles.container}>
         <div className={styles.header}>
           <span className={styles.label}>The Antanox Protocol</span>

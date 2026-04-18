@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { inquirySchema } from "@/lib/validations";
 import { sendInquiryConfirmation } from "@/lib/email";
+import { addToNotionInquiries } from "@/lib/notion";
 
 function generateReferenceId(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
@@ -41,9 +42,28 @@ export async function POST(request: NextRequest) {
       budget: data.budget,
     });
 
-    const emailResult = await sendInquiryConfirmation(data, referenceId);
+    const [emailResult, notionResult] = await Promise.all([
+      sendInquiryConfirmation(data, referenceId),
+      addToNotionInquiries(
+        {
+          fullName: data.fullName,
+          organization: data.organization,
+          role: data.role,
+          engagementType: data.engagementType,
+          requirements: data.requirements,
+          timeline: data.timeline,
+          budget: data.budget,
+        },
+        referenceId
+      ),
+    ]);
+
     if (!emailResult.success) {
       console.warn("Failed to send confirmation email:", emailResult.error);
+    }
+
+    if (!notionResult.success) {
+      console.warn("Failed to add to Notion:", notionResult.error);
     }
 
     return NextResponse.json({

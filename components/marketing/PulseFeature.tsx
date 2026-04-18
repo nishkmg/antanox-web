@@ -1,12 +1,80 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "@/components/ui/Button";
 import styles from "./PulseFeature.module.css";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export default function PulseFeature() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) return;
+
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const content = section.querySelector(`.${styles.content}`);
+    const visual = section.querySelector(`.${styles.visual}`);
+    const gauge = visual?.querySelector(`.${styles.gaugeFill}`);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 70%",
+        once: true,
+      },
+    });
+
+    if (content) {
+      tl.fromTo(
+        content.children,
+        { opacity: 0, x: -40 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "expo.out",
+        }
+      );
+    }
+
+    if (visual) {
+      tl.fromTo(
+        visual,
+        { opacity: 0, x: 40 },
+        { opacity: 1, x: 0, duration: 0.8, ease: "expo.out" },
+        "-=0.5"
+      );
+    }
+
+    if (gauge) {
+      tl.fromTo(
+        gauge,
+        { strokeDashoffset: 251 },
+        { strokeDashoffset: 60, duration: 1.2, ease: "expo.out" },
+        "-=0.4"
+      );
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+
   return (
-    <section className={styles.section}>
+    <section className={styles.section} ref={sectionRef}>
       <div className={styles.container}>
         <div className={styles.content}>
           <span className={styles.label}>Security Intelligence Layer</span>
@@ -58,7 +126,7 @@ export default function PulseFeature() {
                 strokeWidth="12"
                 strokeLinecap="round"
                 strokeDasharray="251"
-                strokeDashoffset="60"
+                strokeDashoffset="251"
                 className={styles.gaugeFill}
               />
             </svg>

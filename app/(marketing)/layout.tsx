@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Providers from "@/components/Providers";
+import TerminalTrigger from "@/components/terminal/TerminalTrigger";
 
 export const metadata: Metadata = {
   title: "Antanox — Proprietary Infrastructure. Engineered for Consequence.",
@@ -11,5 +13,11 @@ export default function MarketingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Providers />
+      {children}
+      <TerminalTrigger />
+    </>
+  );
 }
