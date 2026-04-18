@@ -1,0 +1,218 @@
+.section {
+  padding: var(--space-32) 0;
+  background-color: var(--color-midnight-navy);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-cobalt);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  max-width: 480px;
+}
+
+.stats {
+  display: flex;
+  gap: var(--space-8);
+  margin: var(--space-4) 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.gauge {
+  position: relative;
+  width: 200px;
+  height: 120px;
+}
+
+.gaugeSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.gaugeFill {
+  animation: gauge-fill 1.2s var(--ease-out-expo) forwards;
+  stroke-dashoffset: 251;
+}
+
+@keyframes gauge-fill {
+  to {
+    stroke-dashoffset: 60;
+  }
+}
+
+.gaugeValue {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.gaugeNumber {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.gaugeLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mockup {
+  background-color: var(--color-surface-1);
+  border: 1px solid var(--color-border-hairline);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  width: 100%;
+  max-width: 320px;
+}
+
+.mockupHeader {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background-color: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border-hairline);
+}
+
+.mockupDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-surface-3);
+}
+
+.mockupContent {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mockupBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.mockupBarCritical {
+  color: var(--color-critical);
+}
+
+.mockupBarHigh {
+  color: var(--color-high);
+}
+
+.mockupBarMedium {
+  color: var(--color-medium);
+}
+
+.mockupBarLow {
+  color: var(--color-low);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .description {
+    max-width: none;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .visual {
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: var(--space-20) 0;
+  }
+
+  .title {
+    font-size: var(--text-3xl);
+  }
+
+  .stats {
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+}

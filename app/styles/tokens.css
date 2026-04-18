@@ -1,0 +1,200 @@
+/* ─── TYPOGRAPHY ─────────────────────────────────────────────── */
+:root {
+  /* Font families — fallback order: primary → system → sans */
+  /* PP Neue Montreal unavailable → Montserrat as primary (closest geometric sans) */
+  --font-display: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Scale (Major Third — 1.250 ratio) */
+  --text-xs: 0.64rem;
+  --text-sm: 0.8rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.563rem;
+  --text-2xl: 1.953rem;
+  --text-3xl: 2.441rem;
+  --text-4xl: 3.052rem;
+  --text-5xl: 3.815rem;
+  --text-display: 5rem;
+  --text-hero: clamp(3.5rem, 8vw, 7rem);
+
+  /* ─── COLOR PALETTE ──────────────────────────────────────────── */
+
+  /* Backgrounds */
+  --color-obsidian: #050505;
+  --color-obsidian-1: #0A0A0A;
+  --color-obsidian-2: #111111;
+  --color-obsidian-3: #181818;
+  --color-obsidian-4: #222222;
+  --color-midnight-navy: #0A1128;
+
+  /* Surfaces */
+  --color-surface-0: #050505;
+  --color-surface-1: #0D0D0D;
+  --color-surface-2: #141414;
+  --color-surface-3: #1C1C1C;
+
+  /* Borders */
+  --color-border-hairline: rgba(255, 255, 255, 0.06);
+  --color-border-subtle: rgba(255, 255, 255, 0.10);
+  --color-border-default: rgba(255, 255, 255, 0.15);
+  --color-border-strong: rgba(255, 255, 255, 0.25);
+
+  /* Text */
+  --color-text-primary: #F4F4F4;
+  --color-text-secondary: #888888;
+  --color-text-tertiary: #484848;
+  --color-text-inverse: #050505;
+
+  /* Accent — Electric Cobalt */
+  --color-cobalt: #0047FF;
+  --color-cobalt-hover: #1A5CFF;
+  --color-cobalt-muted: rgba(0, 71, 255, 0.12);
+  --color-cobalt-glow: rgba(0, 71, 255, 0.25);
+
+  /* Accent — Brushed Silver */
+  --color-silver: #C8D0DC;
+  --color-silver-muted: #7A8698;
+
+  /* Semantic — Security/Status */
+  --color-critical: #FF3B3B;
+  --color-high: #FF7A00;
+  --color-medium: #F5C518;
+  --color-nominal: #1DB954;
+  --color-low: #4DA6FF;
+
+  /* ─── SPACING ────────────────────────────────────────────────── */
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ─── BORDER RADIUS ──────────────────────────────────────────── */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ─── MOTION ─────────────────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-inout-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-instant: 80ms;
+  --duration-micro: 120ms;
+  --duration-fast: 200ms;
+  --duration-standard: 350ms;
+  --duration-slow: 600ms;
+  --duration-reveal: 900ms;
+}
+
+/* ─── RESET & BASE ───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--color-text-primary);
+  background-color: var(--color-obsidian);
+  min-height: 100vh;
+}
+
+/* ─── TYPOGRAPHY DEFAULTS ─────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+p {
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ─── SELECTION ───────────────────────────────────────────────── */
+::selection {
+  background-color: var(--color-cobalt);
+  color: var(--color-text-primary);
+}
+
+/* ─── SCROLLBAR ───────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-obsidian-1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-obsidian-3);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-obsidian-4);
+}
+
+/* ─── FOCUS STATES ────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-cobalt);
+  outline-offset: 4px;
+}
+
+/* ─── REDUCED MOTION ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

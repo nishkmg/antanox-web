@@ -1,0 +1,332 @@
+.main {
+  min-height: 100vh;
+  background-color: var(--color-obsidian);
+}
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+  background: linear-gradient(
+    180deg,
+    var(--color-midnight-navy) 0%,
+    var(--color-obsidian) 100%
+  );
+}
+
+.heroContent {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-cobalt);
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  color: var(--color-text-primary);
+}
+
+.heroGauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.gaugeRing {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.gaugeSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.gaugeProgress {
+  animation: gauge-fill 1.5s var(--ease-out-expo) forwards;
+  stroke-dashoffset: 502;
+}
+
+@keyframes gauge-fill {
+  to {
+    stroke-dashoffset: 125;
+  }
+}
+
+.gaugeCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.gaugeValue {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.gaugeLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.1em;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* Problem */
+.problem {
+  padding: var(--space-32) 0;
+}
+
+.problemGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.problemCard {
+  background-color: var(--color-surface-1);
+}
+
+.problemCardHighlight {
+  background-color: var(--color-cobalt-muted);
+  border-color: var(--color-cobalt);
+}
+
+.problemTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.problemCardHighlight .problemTitle {
+  color: var(--color-cobalt);
+}
+
+.problemList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.problemList li {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  padding-left: var(--space-6);
+  position: relative;
+}
+
+.problemList li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-text-tertiary);
+}
+
+.problemCardHighlight .problemList li::before {
+  color: var(--color-cobalt);
+}
+
+/* How It Works */
+.howItWorks {
+  padding: var(--space-32) 0;
+  background-color: var(--color-surface-1);
+}
+
+.sectionLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-cobalt);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: var(--space-16);
+}
+
+.pipeline {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.pipelineStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+  flex: 1;
+  position: relative;
+}
+
+.pipelineStepNumber {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--color-cobalt);
+}
+
+.pipelineStepName {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.pipelineStepDesc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  max-width: 150px;
+}
+
+.pipelineConnector {
+  position: absolute;
+  top: 30px;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--color-border-default),
+    transparent
+  );
+}
+
+/* ARS */
+.ars {
+  padding: var(--space-32) 0;
+}
+
+.arsBands {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.arsBand {
+  display: grid;
+  grid-template-columns: 120px 100px 1fr;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-surface-1);
+  border-radius: var(--radius-md);
+}
+
+.arsRange {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.arsBandName {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.arsBandDesc {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.arsnominal { color: var(--color-nominal); }
+.arslow { color: var(--color-low); }
+.arsmedium { color: var(--color-medium); }
+.arshigh { color: var(--color-high); }
+.arscritical { color: var(--color-critical); }
+
+/* CTA */
+.cta {
+  padding: var(--space-32) 0;
+  background-color: var(--color-midnight-navy);
+  text-align: center;
+}
+
+.ctaTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.ctaText {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .problemGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pipeline {
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .pipelineConnector {
+    display: none;
+  }
+
+  .arsBand {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    text-align: center;
+  }
+}

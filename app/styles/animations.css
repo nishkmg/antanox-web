@@ -1,0 +1,184 @@
+/* ─── KEYFRAME ANIMATIONS ────────────────────────────────────── */
+
+/* Fade in */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fade in up */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in down */
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide in from left */
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide in from right */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale in */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Draw line left to right */
+@keyframes draw-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Pulse dot */
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Blink cursor */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Shake */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-4px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(4px);
+  }
+}
+
+/* Grain shift */
+@keyframes grain-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2%, -4%);
+  }
+  50% {
+    transform: translate(-5%, 2%);
+  }
+  75% {
+    transform: translate(4%, -3%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* ─── ANIMATION UTILITY CLASSES ──────────────────────────────── */
+
+.animate-fade-in {
+  animation: fade-in var(--duration-standard) var(--ease-out-expo) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up var(--duration-standard) var(--ease-out-expo) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down var(--duration-standard) var(--ease-out-expo) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left var(--duration-standard) var(--ease-out-expo) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right var(--duration-standard) var(--ease-out-expo) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-standard) var(--ease-out-expo) forwards;
+}
+
+.animate-draw-line {
+  animation: draw-line var(--duration-slow) var(--ease-out-expo) forwards;
+  transform-origin: left center;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.4s var(--ease-out-expo);
+}
+
+/* Stagger delays */
+.delay-0 { animation-delay: 0ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+.delay-900 { animation-delay: 900ms; }
